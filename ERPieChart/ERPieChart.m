@@ -41,7 +41,8 @@
      *  记录上一次随机色
      */
     UIColor *LastTempColor;
-        double add;
+    double add;
+    float temp;
 }
 
 //创建全局属性
@@ -128,55 +129,41 @@ ERPieChartStyle PieStyle;
     // 圆心
     centerP = CGPointMake(self.radius, self.radius);
     
-        //创建出CAShapeLayer
-        self.shapeLayer = [CAShapeLayer layer];
-        self.shapeLayer.frame = self.bounds;
-
+    //创建出CAShapeLayer
+    self.shapeLayer = [CAShapeLayer layer];
+    
+    self.shapeLayer.frame = CGRectMake(0, 0, 200, 200);//设置shapeLayer的尺寸和位置
     self.shapeLayer.position = centerP;
-        self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
     
-        //设置线条的宽度和颜色
-        self.shapeLayer.lineWidth = 100;
-        self.shapeLayer.strokeColor = [UIColor redColor].CGColor;
+    self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
     
-        //设置stroke起始点
-        self.shapeLayer.strokeStart = 0;
-        self.shapeLayer.strokeEnd = 0;
-        add = 0.1;
+    //设置线条的宽度和颜色
+    self.shapeLayer.lineWidth = self.radius * 2;
+    self.shapeLayer.strokeColor = [UIColor redColor].CGColor;
     
-        //创建出圆形贝塞尔曲线
-        UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(0, 0, self.radius, self.radius)];
-
+    //设置stroke起始点
+    self.shapeLayer.strokeStart = 0;
+    self.shapeLayer.strokeEnd = 0;
+    add = 0.1;
+    UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:centerP radius:self.radius startAngle:0 endAngle:M_PI * 2 clockwise:YES];
+    //让贝塞尔曲线与CAShapeLayer产生联系
+    self.shapeLayer.path = circlePath.CGPath;
     
-        //让贝塞尔曲线与CAShapeLayer产生联系
-        self.shapeLayer.path = circlePath.CGPath;
-    
-        //添加并显示
-        [self.layer addSublayer:self.shapeLayer];
+    //添加并显示
+    [self.layer addSublayer:self.shapeLayer];
     
     
-        _timer = [NSTimer scheduledTimerWithTimeInterval:0.1
-                                                  target:self
-                                                selector:@selector(circleAnimationTypeOne)
-                                                userInfo:nil
-                                                 repeats:YES];
-    
-    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(circleAnimation) userInfo:nil repeats:YES];
 }
-- (void)circleAnimationTypeOne
+- (void)circleAnimation
 {
-    if (self.shapeLayer.strokeEnd > 1 && self.shapeLayer.strokeStart < 1) {
-        self.shapeLayer.strokeStart += add;
-    }else if(self.shapeLayer.strokeStart == 0){
-        self.shapeLayer.strokeEnd += add;
-    }
+    self.shapeLayer.strokeStart = 0;
+    self.shapeLayer.strokeEnd += add;
     
-    if (self.shapeLayer.strokeEnd == 0) {
-        self.shapeLayer.strokeStart = 0;
-    }
+    temp = self.shapeLayer.strokeEnd;
     
-    if (self.shapeLayer.strokeStart == self.shapeLayer.strokeEnd) {
-        self.shapeLayer.strokeEnd = 0;
+    if ((int)temp == 1) {
+        [self.timer invalidate];
     }
 }
 

@@ -43,11 +43,13 @@
     
     // 创建一个基础的饼图
     ERPieChart *pieChart = [[ERPieChart alloc] initWithStyle:ERPieChartAnimation];
-    pieChart.center = CGPointMake(SCREENWIDTH * 0.5, SCREENHEIGHT * 0.3);
-    pieChart.radius = SCREENWIDTH * 0.3;
+    pieChart.center = CGPointMake(SCREENWIDTH * 0.5, 180);
+    pieChart.radius = 100;
     
-    pieChart.airCircleColor = [UIColor whiteColor];
-    pieChart.airCircleRadius = 20;
+    pieChart.backgroundColor = [UIColor blackColor];
+    
+//    pieChart.airCircleColor = [UIColor whiteColor];
+//    pieChart.airCircleRadius = 20;
     
     pieChart.datas = @[@10,@20,@40,@60,@120];
     
