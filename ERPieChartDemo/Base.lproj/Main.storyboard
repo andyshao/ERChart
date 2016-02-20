@@ -29,14 +29,43 @@
                                     <action selector="AirRadiusSliderChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="HYD-6e-j8g"/>
                                 </connections>
                             </slider>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="isAnimate" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="avE-Yh-UPT">
+                                <rect key="frame" x="10" y="534" width="75" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="wtc-8M-PTa">
+                                <rect key="frame" x="95" y="531" width="163" height="29"/>
+                                <segments>
+                                    <segment title="NoAnimate"/>
+                                    <segment title="Animate"/>
+                                </segments>
+                                <connections>
+                                    <action selector="didChageStyle:" destination="BYZ-38-t0r" eventType="valueChanged" id="qW5-cQ-rh5"/>
+                                </connections>
+                            </segmentedControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fq6-Xs-v3f">
+                                <rect key="frame" x="21" y="494" width="53" height="30"/>
+                                <state key="normal" title="Refresh"/>
+                                <connections>
+                                    <action selector="refresh:" destination="BYZ-38-t0r" eventType="touchUpInside" id="IwE-nn-rEu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="avE-Yh-UPT" firstAttribute="top" secondItem="fq6-Xs-v3f" secondAttribute="bottom" constant="10" id="5bj-e9-1QM"/>
                             <constraint firstItem="Mpx-iO-N4R" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="9UT-pk-U35"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Mpx-iO-N4R" secondAttribute="bottom" constant="15" id="AAo-9Q-Dbc"/>
+                            <constraint firstItem="fq6-Xs-v3f" firstAttribute="centerX" secondItem="avE-Yh-UPT" secondAttribute="centerX" id="C01-oK-8oE"/>
                             <constraint firstAttribute="trailing" secondItem="bq4-5O-xjn" secondAttribute="trailing" constant="10" id="H19-hV-f8z"/>
                             <constraint firstItem="bq4-5O-xjn" firstAttribute="leading" secondItem="Mpx-iO-N4R" secondAttribute="trailing" constant="10" id="Ks4-2h-uUa"/>
+                            <constraint firstItem="avE-Yh-UPT" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" constant="10" id="LqN-YG-Mqw"/>
+                            <constraint firstItem="wtc-8M-PTa" firstAttribute="leading" secondItem="avE-Yh-UPT" secondAttribute="trailing" constant="10" id="OjU-Re-aS2"/>
+                            <constraint firstItem="Mpx-iO-N4R" firstAttribute="top" secondItem="avE-Yh-UPT" secondAttribute="bottom" constant="10" id="cMe-e3-AWa"/>
                             <constraint firstItem="bq4-5O-xjn" firstAttribute="centerY" secondItem="Mpx-iO-N4R" secondAttribute="centerY" id="lNX-BA-QaM"/>
+                            <constraint firstItem="wtc-8M-PTa" firstAttribute="centerY" secondItem="avE-Yh-UPT" secondAttribute="centerY" id="x1Q-ED-ckz"/>
                         </constraints>
                     </view>
                     <connections>
@@ -45,7 +74,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="323" y="317"/>
+            <point key="canvasLocation" x="371" y="337"/>
         </scene>
     </scenes>
 </document>
