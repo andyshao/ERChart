@@ -41,6 +41,4 @@ typedef NS_ENUM(NSInteger, ERPieChartStyle) {
 @property (nonatomic, strong) UIColor *airCircleColor;
 
 - (ERPieChart *)initWithStyle:(ERPieChartStyle)ERPieStyle;
-
-- (void)refresh;
 @end

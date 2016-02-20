@@ -41,10 +41,8 @@
      *  记录上一次随机色
      */
     UIColor *LastTempColor;
-    float add;
+    double add;
     float temp;
-    int bounses;
-    BOOL isAdd;
 }
 
 //创建全局属性
@@ -66,9 +64,7 @@ ERPieChartStyle PieStyle;
     
     return pieChart;
 }
-- (void)refresh {
-    [self pieChartAnimation];
-}
+
 - (void)drawRect:(CGRect)rect {
     if (PieStyle == ERPieChartBasic) {
         [self pieChartBasic];
@@ -119,7 +115,7 @@ ERPieChartStyle PieStyle;
     // 还原值
     startRadian = self.start - M_PI_2;
     sum = 0.0;
-    bounses = 3;
+    
     // 空心圆
     if (_airCircleRadius) {
         UIBezierPath *airPath = [UIBezierPath bezierPathWithArcCenter:centerP radius:_airCircleRadius startAngle:0 endAngle:M_PI * 2 clockwise:YES];
@@ -133,54 +129,42 @@ ERPieChartStyle PieStyle;
     // 圆心
     centerP = CGPointMake(self.radius, self.radius);
     
-    CAShapeLayer *rootLayer = [CAShapeLayer layer];
-    rootLayer.position = centerP;
-    rootLayer.bounds = self.bounds;
-    [self.layer addSublayer:rootLayer];
+    //创建出CAShapeLayer
+    self.shapeLayer = [CAShapeLayer layer];
     
-    // 计算总数据
-    for (int i = 0; i < self.datas.count; i++) {
-        sum += [self.datas[i] floatValue];
+    self.shapeLayer.frame = CGRectMake(0, 0, 200, 200);//设置shapeLayer的尺寸和位置
+    self.shapeLayer.position = centerP;
+    
+    self.shapeLayer.fillColor = [UIColor clearColor].CGColor;
+    
+    //设置线条的宽度和颜色
+    self.shapeLayer.lineWidth = self.radius * 2;
+    self.shapeLayer.strokeColor = [UIColor redColor].CGColor;
+    
+    //设置stroke起始点
+    self.shapeLayer.strokeStart = 0;
+    self.shapeLayer.strokeEnd = 0;
+    add = 0.1;
+    UIBezierPath *circlePath = [UIBezierPath bezierPathWithArcCenter:centerP radius:self.radius startAngle:0 endAngle:M_PI * 2 clockwise:YES];
+    //让贝塞尔曲线与CAShapeLayer产生联系
+    self.shapeLayer.path = circlePath.CGPath;
+    
+    //添加并显示
+    [self.layer addSublayer:self.shapeLayer];
+    
+    
+    _timer = [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(circleAnimation) userInfo:nil repeats:YES];
+}
+- (void)circleAnimation
+{
+    self.shapeLayer.strokeStart = 0;
+    self.shapeLayer.strokeEnd += add;
+    
+    temp = self.shapeLayer.strokeEnd;
+    
+    if ((int)temp == 1) {
+        [self.timer invalidate];
     }
-    UIBezierPath *path = [UIBezierPath bezierPathWithArcCenter:centerP radius:self.radius startAngle:-M_PI_2 endAngle:M_PI_2 * 3 clockwise:YES];
-    for (int i = 0; i<self.datas.count; i++) {
-        CAShapeLayer *pieLayer = [CAShapeLayer layer];
-        // 计算弧度
-        endRadian = [self.datas[i] floatValue] / sum  + startRadian;
-        
-        pieLayer.fillColor   = [UIColor clearColor].CGColor;
-        tempColor = self.colors[i];
-        
-        pieLayer.strokeColor = tempColor.CGColor;
-        pieLayer.strokeStart = startRadian;
-        pieLayer.strokeEnd   = endRadian;
-        
-        
-        pieLayer.lineWidth   = self.radius * 2 - self.airCircleRadius * 2;
-        pieLayer.path        = path.CGPath;
-        [rootLayer addSublayer:pieLayer];
-        startRadian = endRadian;
-    }
-    
-    CAShapeLayer *maskLayer = [CAShapeLayer layer];
-    
-    UIBezierPath *pathM = [UIBezierPath bezierPathWithArcCenter:centerP radius:self.radius startAngle:-M_PI_2 endAngle:M_PI_2 * 3 clockwise:YES];
-    maskLayer.fillColor   = [UIColor clearColor].CGColor;
-    maskLayer.strokeColor = [UIColor whiteColor].CGColor;
-    maskLayer.strokeStart = 0;
-    maskLayer.strokeEnd   = 1;
-    maskLayer.lineWidth   = self.radius * 2;
-    maskLayer.path        = pathM.CGPath;
-    
-    rootLayer.mask = maskLayer;
-    
-    CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"strokeEnd"];
-    animation.duration  = 1;
-    animation.fromValue = @0;
-    animation.toValue   = @1;
-    animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
-    animation.removedOnCompletion = YES;
-    [rootLayer.mask addAnimation:animation forKey:@"circleAnimation"];
 }
 
 -(NSArray *)colors {
@@ -236,7 +220,6 @@ ERPieChartStyle PieStyle;
     
     self.layer.cornerRadius = self.radius;
     self.layer.masksToBounds = YES;
-    
 }
 
 - (int)colorsCount {
@@ -247,6 +230,7 @@ ERPieChartStyle PieStyle;
 }
 -(void)layoutSubviews {
     [super layoutSubviews];
+    
     if (PieStyle == ERPieChartAnimation) {
         [self pieChartAnimation];
     }

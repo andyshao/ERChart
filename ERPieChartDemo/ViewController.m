@@ -22,7 +22,8 @@
 //创建全局属性
 @property (nonatomic, strong) CAShapeLayer *shapeLayer;
 @property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, assign) ERPieChartStyle style;
+
+
 @property (nonatomic, weak) ERPieChart *pieChart;
 
 @property (weak, nonatomic) IBOutlet UISlider *airRadiusSlider;
@@ -30,60 +31,25 @@
 @end
 
 @implementation ViewController
-
-float airRadius = 50;
-- (IBAction)didChageStyle:(UISegmentedControl *)sender {
-    if (sender.selectedSegmentIndex == 0) {
-        self.style = ERPieChartBasic;
-        [self refresh];
-    }
-    if (sender.selectedSegmentIndex == 1) {
-        self.style = ERPieChartAnimation;
-        [self refresh];
-    }
-}
-
-- (IBAction)refresh:(UIButton *)sender {
-    [self refresh];
-}
 - (IBAction)AirRadiusSliderChanged:(UISlider *)sender {
     
-    airRadius = sender.value * self.pieChart.radius;
-    
-    [self refresh];
+    self.pieChart.airCircleRadius = sender.value * self.pieChart.radius;
+    [self.pieChart setNeedsDisplay];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self pieChartBasicDemo];
-}
 
-- (void)animatePieChartDemo{
+    
+    
     // 创建一个基础的饼图
     ERPieChart *pieChart = [[ERPieChart alloc] initWithStyle:ERPieChartAnimation];
-    self.style = ERPieChartAnimation;
-    pieChart.center = CGPointMake(SCREENWIDTH * 0.5, 160);
-    pieChart.radius = 120;
+    pieChart.center = CGPointMake(SCREENWIDTH * 0.5, 180);
+    pieChart.radius = 100;
     
-    pieChart.airCircleColor = [UIColor whiteColor];
-    pieChart.airCircleRadius = airRadius;
+    pieChart.backgroundColor = [UIColor blackColor];
     
-    pieChart.datas = @[@10,@20,@40,@60,@120];
-    
-    
-    self.pieChart = pieChart;
-    [self.view addSubview:pieChart];
-}
-
-- (void)pieChartBasicDemo {
-    // 创建一个基础的饼图
-    ERPieChart *pieChart = [[ERPieChart alloc] initWithStyle:ERPieChartBasic];
-    self.style = ERPieChartBasic;
-    pieChart.center = CGPointMake(SCREENWIDTH * 0.5, 160);
-    pieChart.radius = 120;
-    
-    pieChart.airCircleColor = [UIColor whiteColor];
-    pieChart.airCircleRadius = airRadius;
+//    pieChart.airCircleColor = [UIColor whiteColor];
+//    pieChart.airCircleRadius = 20;
     
     pieChart.datas = @[@10,@20,@40,@60,@120];
     
@@ -94,17 +60,6 @@ float airRadius = 50;
 
 - (BOOL)prefersStatusBarHidden {
     return YES;
-}
-
-- (void)refresh {
-    [self.pieChart removeFromSuperview];
-    if (self.style == ERPieChartAnimation) {
-        [self animatePieChartDemo];
-    }
-    
-    if (self.style == ERPieChartBasic) {
-        [self pieChartBasicDemo];
-    }
 }
 
 @end

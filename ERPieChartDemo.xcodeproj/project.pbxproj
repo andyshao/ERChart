@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1624FD181C784F4D00BF8AD9 /* ERPieDataHandling.m in Sources */ = {isa = PBXBuildFile; fileRef = 1624FD171C784F4D00BF8AD9 /* ERPieDataHandling.m */; };
 		162EE69B1C76FBFB00AD14D6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 162EE69A1C76FBFB00AD14D6 /* main.m */; };
 		162EE69E1C76FBFB00AD14D6 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 162EE69D1C76FBFB00AD14D6 /* AppDelegate.m */; };
 		162EE6A11C76FBFB00AD14D6 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 162EE6A01C76FBFB00AD14D6 /* ViewController.m */; };
@@ -18,8 +17,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1624FD161C784F4D00BF8AD9 /* ERPieDataHandling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ERPieDataHandling.h; sourceTree = "<group>"; };
-		1624FD171C784F4D00BF8AD9 /* ERPieDataHandling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ERPieDataHandling.m; sourceTree = "<group>"; };
 		162EE6961C76FBFB00AD14D6 /* ERPieChartDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ERPieChartDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		162EE69A1C76FBFB00AD14D6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		162EE69C1C76FBFB00AD14D6 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -91,8 +88,6 @@
 			children = (
 				162EE6B21C76FD2900AD14D6 /* ERPieChart.h */,
 				162EE6B11C76FD2900AD14D6 /* ERPieChart.m */,
-				1624FD161C784F4D00BF8AD9 /* ERPieDataHandling.h */,
-				1624FD171C784F4D00BF8AD9 /* ERPieDataHandling.m */,
 			);
 			path = ERPieChart;
 			sourceTree = "<group>";
@@ -169,7 +164,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				162EE6A11C76FBFB00AD14D6 /* ViewController.m in Sources */,
-				1624FD181C784F4D00BF8AD9 /* ERPieDataHandling.m in Sources */,
 				162EE69E1C76FBFB00AD14D6 /* AppDelegate.m in Sources */,
 				162EE6B31C76FD2900AD14D6 /* ERPieChart.m in Sources */,
 				162EE69B1C76FBFB00AD14D6 /* main.m in Sources */,
