@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #define ERRORISKINDOFUICOLORCLASS NSAssert([_colors[i] isKindOfClass:[UIColor class]], @"颜色数组里有非UIColor对象！");
+
 typedef NS_ENUM(NSInteger, ERPieChartStyle) {
     ERPieChartBasic,
     ERPieChartAnimation
@@ -39,8 +40,18 @@ typedef NS_ENUM(NSInteger, ERPieChartStyle) {
  *  Pie Chart 空心圆的颜色
  */
 @property (nonatomic, strong) UIColor *airCircleColor;
-
+/**
+ *  Pie Chart Title标题数组
+ */
+@property (nonatomic, strong) NSArray *titles;
+/**
+ *  Pie Chart Title标题颜色
+ */
+@property (nonatomic, strong) UIColor *titleColor;
+/**
+ *  Pie Chart Title标题颜色
+ */
+@property (nonatomic, assign) CGFloat titleSize;
 - (ERPieChart *)initWithStyle:(ERPieChartStyle)ERPieStyle;
 
-- (void)refresh;
 @end

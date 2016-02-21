@@ -31,7 +31,7 @@
 
 @implementation ViewController
 
-float airRadius = 50;
+float airRadius = 80;
 - (IBAction)didChageStyle:(UISegmentedControl *)sender {
     if (sender.selectedSegmentIndex == 0) {
         self.style = ERPieChartBasic;
@@ -46,15 +46,14 @@ float airRadius = 50;
 - (IBAction)refresh:(UIButton *)sender {
     [self refresh];
 }
+
 - (IBAction)AirRadiusSliderChanged:(UISlider *)sender {
-    
     airRadius = sender.value * self.pieChart.radius;
-    
     [self refresh];
 }
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self pieChartBasicDemo];
 }
 
@@ -63,14 +62,11 @@ float airRadius = 50;
     ERPieChart *pieChart = [[ERPieChart alloc] initWithStyle:ERPieChartAnimation];
     self.style = ERPieChartAnimation;
     pieChart.center = CGPointMake(SCREENWIDTH * 0.5, 160);
-    pieChart.radius = 120;
-    
+    pieChart.radius = 160;
+    pieChart.start = M_PI_4;
     pieChart.airCircleColor = [UIColor whiteColor];
     pieChart.airCircleRadius = airRadius;
-    
     pieChart.datas = @[@10,@20,@40,@60,@120];
-    
-    
     self.pieChart = pieChart;
     [self.view addSubview:pieChart];
 }
@@ -80,14 +76,14 @@ float airRadius = 50;
     ERPieChart *pieChart = [[ERPieChart alloc] initWithStyle:ERPieChartBasic];
     self.style = ERPieChartBasic;
     pieChart.center = CGPointMake(SCREENWIDTH * 0.5, 160);
-    pieChart.radius = 120;
-    
+    pieChart.radius = 100;
+        pieChart.start = M_PI_4;
     pieChart.airCircleColor = [UIColor whiteColor];
     pieChart.airCircleRadius = airRadius;
-    
     pieChart.datas = @[@10,@20,@40,@60,@120];
-    
-    
+    pieChart.titles = @[@"闭月羞花",@"沉鱼落雁",@"香汗淋漓",@"紫葡萄",@"软芭蕉"];
+    pieChart.titleColor = [UIColor redColor];
+    pieChart.titleSize = 12;
     self.pieChart = pieChart;
     [self.view addSubview:pieChart];
 }
@@ -97,11 +93,11 @@ float airRadius = 50;
 }
 
 - (void)refresh {
+
     [self.pieChart removeFromSuperview];
     if (self.style == ERPieChartAnimation) {
         [self animatePieChartDemo];
     }
-    
     if (self.style == ERPieChartBasic) {
         [self pieChartBasicDemo];
     }
