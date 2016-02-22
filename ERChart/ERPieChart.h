@@ -10,6 +10,8 @@
 
 #define ERRORISKINDOFUICOLORCLASS NSAssert([_colors[i] isKindOfClass:[UIColor class]], @"颜色数组里有非UIColor对象！");
 
+
+
 typedef NS_ENUM(NSInteger, ERPieChartStyle) {
     ERPieChartBasic,
     ERPieChartAnimation
@@ -49,9 +51,18 @@ typedef NS_ENUM(NSInteger, ERPieChartStyle) {
  */
 @property (nonatomic, strong) UIColor *titleColor;
 /**
- *  Pie Chart Title标题颜色
+ *  Pie Chart Title标题大小
  */
 @property (nonatomic, assign) CGFloat titleSize;
+/**
+ *  Pie Chart 隐藏标题的属性
+ */
+@property (nonatomic, assign) BOOL isHideTitle;
+/**
+ *  Pie Chart 隐藏百分比
+ */
+@property (nonatomic, assign) BOOL isHidePercentage;
+
 - (ERPieChart *)initWithStyle:(ERPieChartStyle)ERPieStyle;
 
 @end

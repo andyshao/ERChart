@@ -64,11 +64,10 @@ ERPieChartStyle PieStyle;
 
 
 - (void)drawRect:(CGRect)rect {
-    if (PieStyle == ERPieChartBasic) {
-        [self pieChartBasic];
-    }
     if (PieStyle == ERPieChartAnimation) {
         [self pieChartAnimation];
+    }else {
+        [self pieChartBasic];
     }
 }
 
@@ -102,13 +101,19 @@ ERPieChartStyle PieStyle;
     _startRadian = self.start - M_PI_2;
     self.sum = 0.0;
     // 空心圆
+    
     if (_airCircleRadius) {
         UIBezierPath *airPath = [UIBezierPath bezierPathWithArcCenter:_centerP radius:_airCircleRadius startAngle:0 endAngle:M_PI * 2 clockwise:YES];
+        if (_airCircleColor == nil) {
+            _airCircleColor = [UIColor whiteColor];
+        }
         [_airCircleColor set];
         CGContextAddPath(ctx, airPath.CGPath);
         CGContextDrawPath(ctx, kCGPathFill);
     }
-    [self loadTitles];
+    if (!_isHideTitle || !_isHidePercentage) {
+        [self loadTitlesAndPercentage];
+    }
 }
 
 - (void)pieChartAnimation {
@@ -183,49 +188,78 @@ ERPieChartStyle PieStyle;
     return _colors;
 }
 
-- (void)loadTitles {
+- (void)loadTitlesAndPercentage {
     [self calculateTitleLabelCenter];
+    if (self.titleSize == .0) {
+        self.titleSize = 10;
+    }
+    // 保存最大的Y 值
     for (int i = 0; i < self.titlesCenter.count; i++) {
+        // 添加title
         UILabel *title = [[UILabel alloc] init];
         title.text = self.titles[i];
+        if (self.titleColor == nil) {
+            title.textColor = [UIColor whiteColor];
+        }else {
         title.textColor = self.titleColor;
-        title.font = [UIFont systemFontOfSize:self.titleSize];
+        }
+        if (!_isHideTitle) {
+                title.font = [UIFont systemFontOfSize:self.titleSize];
+        }else {
+            title.font = [UIFont systemFontOfSize:0];
+        }
+        
         title.textAlignment = NSTextAlignmentCenter;
-//>>>>>>>>>>>>>>  这两句代码交换会造成文字不能居中问题
+        //>>>>>>>>>>>>>>  这两句代码交换会造成文字不能居中问题
         [title sizeToFit];
         title.center = [self.titlesCenter[i] CGPointValue];
-//<<<<<<<<<<<<<<<<
+        //<<<<<<<<<<<<<<
         [self addSubview:title];
+        
+        // 添加百分比
+        UILabel *percent = [[UILabel alloc] init];
+        float data = [self.datas[i] floatValue];
+        percent.text = [NSString stringWithFormat:@"%.2f%%",data / _sum * 100];
+        if (self.titleColor == nil) {
+            percent.textColor = [UIColor whiteColor];
+        }else {
+            percent.textColor = self.titleColor;
+        }
+        if (!_isHidePercentage) {
+            percent.font = [UIFont systemFontOfSize:self.titleSize];
+        }else {
+            percent.font = [UIFont systemFontOfSize:0];
+        }
+        
+        title.textAlignment = NSTextAlignmentCenter;
+        //>>>>>>>>>>>>>>  这两句代码交换会造成文字不能居中问题
+        [percent sizeToFit];
+        //取出center
+        CGPoint PecentCenterPoint = [self.titlesCenter[i] CGPointValue];
+        CGFloat PecentCenterPointX = PecentCenterPoint.x;
+        CGFloat PecentCenterPointY = CGRectGetMaxY(title.frame) + 5;
+        percent.center = CGPointMake(PecentCenterPointX, PecentCenterPointY);
+        //<<<<<<<<<<<<<<
+        [self addSubview:percent];
         
         
     }
-    
-    
-    
 }
 
 - (void)calculateTitleLabelCenter {
     // 开始的度数为北方为正方向0°
     // 记录开始度数
     CGFloat star = self.start;
-    
     NSMutableArray *arrayM = [NSMutableArray array];
-    
     for (int i = 0 ; i< self.titles.count; i++) {
-        
         CGFloat alp =([self.datas[i] floatValue] / self.sum) * M_PI * 2 / 2+ star;
-        
         // 算出起始的半径的中点的坐标
-        CGFloat titleX = self.radius + sin(alp) * self.radius / 2 ;
-        CGFloat titleY = self.radius - cos(alp) * self.radius / 2;
-        
+        CGFloat titleX = self.radius + sin(alp) * (self.radius + self.airCircleRadius) / 2 ;
+        CGFloat titleY = self.radius - cos(alp) * (self.radius + self.airCircleRadius) / 2;
         CGPoint center = CGPointMake(titleX, titleY);
         [arrayM addObject:[NSValue valueWithCGPoint:center]];
-        
-        
         star = ([self.datas[i] floatValue] / self.sum) * M_PI * 2 + star;
-        NSLog(@"start -- %f",star);
-}
+    }
     self.titlesCenter = arrayM.copy;
     
 }
@@ -251,7 +285,7 @@ ERPieChartStyle PieStyle;
     self.layer.cornerRadius = self.radius;
     self.layer.masksToBounds = YES;
 }
-//chartclu
+
 - (CGFloat)sum {
     // 计算总数据
     _sum = 0;

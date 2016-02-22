@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="zXI-ex-8qo">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+    </dependencies>
+    <scenes>
+        <!--ERChart Demo-->
+        <scene sceneID="8gR-t3-Bdd">
+            <objects>
+                <tableViewController id="gY6-4o-mgi" customClass="ERHomeTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="d7K-aq-Eri">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <connections>
+                            <outlet property="dataSource" destination="gY6-4o-mgi" id="D2x-je-hnP"/>
+                            <outlet property="delegate" destination="gY6-4o-mgi" id="78Q-8p-4ua"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="ERChart Demo" id="3lO-ad-dlh">
+                        <barButtonItem key="backBarButtonItem" title="Back" id="9Ed-Bf-KCg"/>
+                    </navigationItem>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Edi-b2-DGW" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="390" y="171"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Jd1-rH-ix2">
+            <objects>
+                <navigationController id="zXI-ex-8qo" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="2eP-oU-Cf4">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="gY6-4o-mgi" kind="relationship" relationship="rootViewController" id="Adg-ap-ze6"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zQR-M4-2nz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-272" y="171"/>
+        </scene>
+    </scenes>
+</document>
