@@ -53,12 +53,12 @@
 @end
 
 @implementation ERPieChart
-ERPieChartStyle PieStyle;
+ERAnimationPieChartStyle PieStyle;
 
-- (ERPieChart *)initWithStyle:(ERPieChartStyle)ERPieStyle {
+- (ERPieChart *)initWithAnimationStyle:(ERAnimationPieChartStyle)AnimationStyle {
     ERPieChart *pieChart = [[ERPieChart alloc] init];
-    pieChart.backgroundColor = [UIColor whiteColor];
-    PieStyle = ERPieStyle;
+    pieChart.backgroundColor = [UIColor clearColor];
+    PieStyle = AnimationStyle;
     return pieChart;
 }
 
@@ -66,8 +66,10 @@ ERPieChartStyle PieStyle;
 - (void)drawRect:(CGRect)rect {
     if (PieStyle == ERPieChartAnimation) {
         [self pieChartAnimation];
+        PieStyle = 0;
     }else {
         [self pieChartBasic];
+        PieStyle = 0;
     }
 }
 
@@ -154,6 +156,10 @@ ERPieChartStyle PieStyle;
     animation.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseInEaseOut];
     animation.removedOnCompletion = YES;
     [rootLayer.mask addAnimation:animation forKey:@"circleAnimation"];
+    
+    if (!_isHideTitle || !_isHidePercentage) {
+        [self loadTitlesAndPercentage];
+    }
 }
 
 -(NSArray *)colors {
@@ -283,6 +289,7 @@ ERPieChartStyle PieStyle;
     bounds.size.height = radius * 2;
     self.bounds = bounds;
     self.layer.cornerRadius = self.radius;
+//    self.layer.backgroundColor = [UIColor greenColor].CGColor;
     self.layer.masksToBounds = YES;
 }
 

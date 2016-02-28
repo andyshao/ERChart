@@ -23,11 +23,13 @@
 
 @implementation ERExampleController
 
-// >>>>>>>>>>>>>>>> Demo实例参数 <<<<<<<<<<<<<<<<<<<<<
+// >>>>>>>>>>>>>>>> Demo 示例参数 <<<<<<<<<<<<<<<<<<<<<
 CGFloat radiu = 100;
 CGFloat AirRadius = 50;
 BOOL isHideTitle = NO;
 BOOL isHidePercent = NO;
+#define DATAS @[@20,@30,@40,@50,@60]
+#define CENTER CGPointMake(SCREENW * .5, SCREENH * .3)
 // <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 - (void)viewDidLoad {
@@ -38,14 +40,31 @@ BOOL isHidePercent = NO;
         [self basicPieChartDemo];
         [self loadBasicPieChartUI];
     }
+    if ([self.navigationItem.title isEqualToString:@"Animation Pie Chart"]) {
+        [self animationPieChartDemo];
+        [self loadBasicPieChartUI];
+    }
 
 }
 
 - (void)basicPieChartDemo {
     ERPieChart *pieChart = [[ERPieChart alloc] init];
     _pieChart = pieChart;
-    pieChart.datas = @[@20,@30,@40,@50,@60];
-    pieChart.center = CGPointMake(SCREENW * .5, SCREENH * .3);
+    pieChart.datas = DATAS;
+    pieChart.center = CENTER;
+    pieChart.radius = radiu;
+    pieChart.airCircleRadius = AirRadius;
+    pieChart.titles = @[@"Tencent",@"Alibaba",@"Baidu",@"Apple",@"Google"];
+    pieChart.isHideTitle = isHideTitle;
+    pieChart.isHidePercentage = isHidePercent;
+    [self.view addSubview:pieChart];
+}
+
+- (void)animationPieChartDemo {
+    ERPieChart *pieChart = [[ERPieChart alloc] initWithAnimationStyle:ERPieChartAnimation];
+    _pieChart = pieChart;
+    pieChart.datas = DATAS;
+    pieChart.center = CENTER;
     pieChart.radius = radiu;
     pieChart.airCircleRadius = AirRadius;
     pieChart.titles = @[@"Tencent",@"Alibaba",@"Baidu",@"Apple",@"Google"];
@@ -197,7 +216,16 @@ BOOL isHidePercent = NO;
 
 - (void)refresh {
     [self.pieChart removeFromSuperview];
-    [self basicPieChartDemo];
+//    [self basicPieChartDemo];
+    if ([self.navigationItem.title isEqualToString:@"Basic Pie Chart"]) {
+        [self basicPieChartDemo];
+//        [self loadBasicPieChartUI];
+    }
+    if ([self.navigationItem.title isEqualToString:@"Animation Pie Chart"]) {
+       [self animationPieChartDemo];
+//        [self loadBasicPieChartUI];
+    }
+    
 }
 
 @end

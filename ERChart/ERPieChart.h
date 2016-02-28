@@ -12,7 +12,7 @@
 
 
 
-typedef NS_ENUM(NSInteger, ERPieChartStyle) {
+typedef NS_ENUM(NSInteger, ERAnimationPieChartStyle) {
     ERPieChartBasic,
     ERPieChartAnimation
 };
@@ -63,6 +63,6 @@ typedef NS_ENUM(NSInteger, ERPieChartStyle) {
  */
 @property (nonatomic, assign) BOOL isHidePercentage;
 
-- (ERPieChart *)initWithStyle:(ERPieChartStyle)ERPieStyle;
+- (ERPieChart *)initWithAnimationStyle:(ERAnimationPieChartStyle)AnimationStyle;
 
 @end
